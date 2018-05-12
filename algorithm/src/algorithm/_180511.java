@@ -1,8 +1,9 @@
 package algorithm;
 
 /* review for merge sort (top-down) */
+/* Time Complexity : O(nlogn) */
 class MergeSort{
-	
+
 	private int[] arr;
 	private int[] temp;
 	public MergeSort(int[] arr){
@@ -12,23 +13,36 @@ class MergeSort{
 		for(int i=0;i<arr.length;i++)
 			temp[i] = arr[i];
 	}
-	public void sort(int start, int end){
+	public void topDownSort(int start, int end){
 		if(end - start<1)
 			return;
-	
+		
 		int middle = (start + end)/2;
-		sort(start,middle);
-		sort(middle+1,end);
+		topDownSort(start,middle);
+		topDownSort(middle+1,end);
 		merge(start,middle,end);
+	}
+	
+	public void bottomUpSort(int start, int end){
+		int totalLen = end - start +1;
+	
+		for(int width = 1; width < totalLen; width *=2){
+			for(int i=start;i<=end; i+=2*width){
+				int mergeStart = i;
+				int mergeEnd = i+2*width-1;
+				int mid = (mergeStart + mergeEnd)/2;
+				merge(mergeStart,mid,Math.min(mergeEnd, end));
+			}
+		}
 		
 	}
+	
 	public void merge(int start,int mid,int end){
 		int i = start;
 		int j = mid +1;
 		int pos = i;
 		
 		while(!(pos>end)){
-			
 			if(i>mid){
 				arr[pos++] = temp[j++];
 			}
@@ -60,9 +74,9 @@ public class _180511 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int arr[] = {1,50,50,-10,20};
+		int arr[] = {1,-10,100,100,50,-1000};
 		MergeSort ms = new MergeSort(arr);
-		ms.sort(0,arr.length-1);
+		ms.bottomUpSort(0,arr.length-1);
 		ms.print();
 	}
 }
