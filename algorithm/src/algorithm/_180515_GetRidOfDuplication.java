@@ -13,7 +13,7 @@ public class _180515_GetRidOfDuplication {
 		Scanner sc = new Scanner(System.in);
 		String inputStr = sc.nextLine();
 		HashMap<Character, Boolean> hashmap = new HashMap<>();
-		String ans = "";
+		StringBuffer ans = new StringBuffer();
 		
 		for(int i=0;i<inputStr.length();i++){
 			char c = inputStr.charAt(i);
@@ -22,7 +22,7 @@ public class _180515_GetRidOfDuplication {
 				continue;
 			
 			hashmap.put(c, true);
-			ans += c;
+			ans.append(c);
 		}
 		
 		System.out.println(ans);
